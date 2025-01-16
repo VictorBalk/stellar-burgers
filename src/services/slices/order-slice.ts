@@ -1,11 +1,7 @@
 import { createSlice, isPending, isFulfilled } from '@reduxjs/toolkit';
 import { sliceName } from '../constant';
 
-import {
-  createOrder,
-  fetchOrders,
-  getOrderByNumber
-} from '../thunk/order-thunk';
+import { createOrder, fetchOrders, getOrderByNumber } from '@thunk';
 import { TOrder } from '@utils-types';
 
 export interface ordersState {

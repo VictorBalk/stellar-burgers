@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { sliceName } from '../constant';
-import { getFetchFeeds } from '../thunk/feeds-thunk';
+import { getFetchFeeds } from '@thunk';
 import { TFeeds } from '@api';
 
 export interface feedsState {

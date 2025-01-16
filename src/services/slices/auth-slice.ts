@@ -15,7 +15,7 @@ import {
   registerUserAuth,
   resetPasswordAuth,
   updateUserAuth
-} from '../thunk/auth-thunk';
+} from '@thunk';
 
 export interface authState {
   isCheck: boolean;
