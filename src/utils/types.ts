@@ -37,4 +37,10 @@ export type TUser = {
   name: string;
 };
 
-export type TTabMode = 'bun' | 'sauce' | 'main';
+export enum TabMode {
+  bun = 'bun',
+  sauce = 'sauce',
+  main = 'main'
+}
+
+export type TTabMode = TabMode.bun | TabMode.sauce | TabMode.main;
