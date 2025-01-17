@@ -1,15 +1,32 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { getIngredientsApi } from '@api';
 
 import {
   TypedUseSelectorHook,
   useDispatch as dispatchHook,
   useSelector as selectorHook
 } from 'react-redux';
+import {
+  ingredientReducer,
+  burgerReducer,
+  authReducer,
+  feedsReducer,
+  orderReducer
+} from '@slices';
+import { sliceName } from './constant';
 
-const rootReducer = () => {}; // Заменить на импорт настоящего редьюсера
+const rootReducer = combineReducers({
+  [sliceName.ingredient]: ingredientReducer,
+  [sliceName.burger]: burgerReducer,
+  [sliceName.auth]: authReducer,
+  [sliceName.feeds]: feedsReducer,
+  [sliceName.order]: orderReducer
+});
 
 const store = configureStore({
   reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ thunk: { extraArgument: getIngredientsApi } }),
   devTools: process.env.NODE_ENV !== 'production'
 });
 
