@@ -15,8 +15,12 @@ type TRefreshResponse = TServerResponse<{
   accessToken: string;
 }>;
 
-export const setTokrns = (accessToken: string, refreshToken: string) => {
-  localStorage.setItem('refreshToken', refreshToken);
+export const setTokens = (accessToken: string, refreshToken: string) => {
+  if (!!refreshToken) {
+    localStorage.setItem('refreshToken', refreshToken);
+  } else {
+    localStorage.removeItem('refreshToken');
+  }
   setCookie('accessToken', accessToken);
 };
 
@@ -35,7 +39,7 @@ export const refreshToken = (): Promise<TRefreshResponse> =>
       if (!refreshData.success) {
         return Promise.reject(refreshData);
       }
-      setTokrns(refreshData.accessToken, refreshData.refreshToken);
+      setTokens(refreshData.accessToken, refreshData.refreshToken);
       return refreshData;
     });
 
@@ -174,7 +178,7 @@ export const loginUserApi = (data: TLoginData) =>
     .then((res) => checkResponse<TAuthResponse>(res))
     .then((data) => {
       if (data?.success) {
-        setTokrns(data.accessToken, data.refreshToken);
+        setTokens(data.accessToken, data.refreshToken);
         return data;
       }
       return Promise.reject(data);

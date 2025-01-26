@@ -54,7 +54,7 @@ describe('Тесты, проверяющие работу burgerReducer', () => 
 
     expect(
       newState.ingredients,
-      'Проверка на не изменность ингридиентов при добалвении булки'
+      'Проверка  ингридиентов при добавлении булки'
     ).toEqual(ingredients);
 
     expect(
@@ -63,7 +63,7 @@ describe('Тесты, проверяющие работу burgerReducer', () => 
     ).toEqual(bun._id);
   });
 
-  test('Добавление ингридента', () => {
+  test('Добавление ингридиента', () => {
     const ingredient = mockIngredients[1];
     const bun = null;
     const newState = burgerReducer(
@@ -71,14 +71,13 @@ describe('Тесты, проверяющие работу burgerReducer', () => 
       burgerAction.addIngredient(ingredient)
     );
 
-    expect(
-      newState.bun,
-      'Проверка на не изменность булки при добалвении ингридента'
-    ).toEqual(bun);
+    expect(newState.bun, 'Проверка булки при добавлении ингридиента').toEqual(
+      bun
+    );
 
     expect(
       newState.ingredients[0]?._id,
-      'Проверка на то, что добавился именно поданный ингрилиент '
+      'Проверка на то, что добавился именно поданный ингридиент '
     ).toEqual(ingredient._id);
   });
 
@@ -96,10 +95,9 @@ describe('Тесты, проверяющие работу burgerReducer', () => 
       burgerAction.removeIngredient(0)
     );
 
-    expect(
-      newState.bun,
-      'Проверка на не изменность булки при удаление ингридента'
-    ).toEqual(bun);
+    expect(newState.bun, 'Проверка  булки при удаление ингридиента').toEqual(
+      bun
+    );
 
     expect(
       newState.ingredients,
@@ -107,4 +105,3 @@ describe('Тесты, проверяющие работу burgerReducer', () => 
     ).toHaveLength(0);
   });
 });
-
