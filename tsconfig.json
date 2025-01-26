@@ -30,5 +30,6 @@
       "@selectors": ["src/services/selectors"]
     }
   },
-  "include": ["src"]
+  "include": ["src"],
+  "files": ["node_modules/jest-expect-message/types/index.d.ts"],
 }
