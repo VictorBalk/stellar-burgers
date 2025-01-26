@@ -1,5 +1,12 @@
 import { setTokens } from '@api';
 
+const selectorModal = `[data-cy='modal']`;
+const selectorModalOverlay = `[data-cy='modal-overlay`;
+const selectConstructor = `[data-cy='constructor']`;
+const selectorIngredientsBun = `[data-cy='ingredients-bun']`;
+const selectorIngredientsMains = `[data-cy='ingredients-mains']`;
+const textButtonAddIngredient = 'Добавить';
+
 describe('Проверка Логики ингредиентов', () => {
   beforeEach(() => {
     // Перехват запросов
@@ -20,7 +27,7 @@ describe('Проверка Логики ингредиентов', () => {
 
   it('Добавление булки из списка ингредиентов в конструктор', () => {
     //Добавляем булку
-    cy.get(`[data-cy='ingredients-bun']`).contains('Добавить').click();
+    cy.get(selectorIngredientsBun).contains(textButtonAddIngredient).click();
     //Проверяем наличие булки сверху
     cy.get(`[data-cy='constructor-bun-top']`).contains('Булка');
     //Проверяем наличие булки снизу
@@ -28,15 +35,15 @@ describe('Проверка Логики ингредиентов', () => {
   });
 
   it('Добавление ингредиента из списка ингредиентов в конструктор', () => {
-    cy.get(`[data-cy='ingredients-mains']`).contains('Добавить').click();
+    cy.get(selectorIngredientsMains).contains(textButtonAddIngredient).click();
     cy.get(`[data-cy='constructor-ingredients']`).contains('Начинка 1');
   });
 
   it('Открытие и закрытие модального окна с описанием ингредиента ', () => {
     //Открываем окно
-    cy.get(`[data-cy='ingredients-bun']`).find('img').click();
+    cy.get(selectorIngredientsBun).find('img').click();
     //Проверяем что окно открыто
-    cy.get(`[data-cy='modal']`).should('exist');
+    cy.get(selectorModal).should('exist');
 
     //Проверка калорий
     cy.get(`[data-cy='ingredient-details-calories']`).contains('420');
@@ -50,17 +57,17 @@ describe('Проверка Логики ингредиентов', () => {
     //Закрываем окно через кнопку
     cy.get(`[data-cy='modal-btnClose']`).click();
     //Проверяем, что окно закрылось
-    cy.get(`[data-cy='modal']`).should('not.exist');
+    cy.get(selectorModal).should('not.exist');
 
     //Открываем окно
-    cy.get(`[data-cy='ingredients-bun']`).find('img').click();
+    cy.get(selectorIngredientsBun).find('img').click();
     //Проверяем что окно открыто
-    cy.get(`[data-cy='modal']`).should('exist');
+    cy.get(selectorModal).should('exist');
 
     //Закрываем окно через нажатие на область вне модального окна
-    cy.get(`[data-cy='modal-overlay']`).click({ force: true });
+    cy.get(selectorModalOverlay).click({ force: true });
     //Проверяем, что окно закрылось
-    cy.get(`[data-cy='modal']`).should('not.exist');
+    cy.get(selectorModal).should('not.exist');
   });
 });
 
@@ -83,16 +90,18 @@ describe('Процесс создания заказа', () => {
 
   it('Создание заказа', () => {
     //Добавляем Булки
-    cy.get(`[data-cy='ingredients-bun']`).contains('Добавить').click();
+    cy.get(selectorIngredientsBun).contains(textButtonAddIngredient).click();
     //Добавляем Начинки
-    cy.get(`[data-cy='ingredients-mains']`).contains('Добавить').click();
+    cy.get(selectorIngredientsMains).contains(textButtonAddIngredient).click();
     //Добавляем Соусы
-    cy.get(`[data-cy='ingredients-sauces']`).contains('Добавить').click();
+    cy.get(`[data-cy='ingredients-sauces']`)
+      .contains(textButtonAddIngredient)
+      .click();
     //Перехватываем запрос создания заказа
     cy.intercept('POST', 'api/orders').as('createOrder');
     //Ищем кнопку оформления заказа
     cy.get(`[data-cy='constructor-total']`).contains('Оформить заказ').click();
-    // Проверим отправленные ингредиенты 
+    // Проверим отправленные ингредиенты
     cy.wait('@createOrder')
       .its('request.body')
       .should('deep.equal', {
@@ -104,15 +113,13 @@ describe('Процесс создания заказа', () => {
     //Закрываем окно через нажатие на область вне модального окна
     cy.get(`[data-cy='modal-overlay']`).click({ force: true });
     //Проверяем, что окно закрылось
-    cy.get(`[data-cy='modal']`).should('not.exist');
+    cy.get(selectorModal).should('not.exist');
 
     //Проверяем отсутствие булки в конструкторе
-    cy.get(`[data-cy='constructor']`).contains('Булка').should('not.exist');
+    cy.get(selectConstructor).contains('Булка').should('not.exist');
     //Проверяем отсутствие начинки
-    cy.get(`[data-cy='constructor']`)
-      .contains('Начинка 1')
-      .should('not.exist');
+    cy.get(selectConstructor).contains('Начинка 1').should('not.exist');
     //Проверяем отсутствие соуса
-    cy.get(`[data-cy='constructor']`).contains('Соус 1').should('not.exist');
+    cy.get(selectConstructor).contains('Соус 1').should('not.exist');
   });
 });
