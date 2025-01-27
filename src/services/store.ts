@@ -15,7 +15,7 @@ import {
 } from '@slices';
 import { sliceName } from './constant';
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   [sliceName.ingredient]: ingredientReducer,
   [sliceName.burger]: burgerReducer,
   [sliceName.auth]: authReducer,

@@ -24,7 +24,7 @@ export const ConstructorPage: FC = () => {
 
   return (
     <>
-      {!isIngredientsLoading ? (
+      {isIngredientsLoading ? (
         <Preloader />
       ) : (
         <main className={styles.containerMain}>
