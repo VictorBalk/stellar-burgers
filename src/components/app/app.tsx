@@ -39,7 +39,7 @@ const App = () => {
   const backgroundLocation = location.state?.background;
 
   const getNumber = () => {
-    const { pathname } = useLocation();
+    const { pathname } = location;
     return String(pathname.split('/').pop()) || '';
   };
 

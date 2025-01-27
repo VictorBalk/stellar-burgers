@@ -16,12 +16,12 @@ describe('Проверка Логики ингредиентов', () => {
     cy.intercept('POST', 'api/orders', { fixture: 'post_order-response' });
     cy.intercept('GET', 'api/orders/all', { fixture: 'orders' });
 
-    cy.visit('http://localhost:4000');
+    cy.visit('/');
     setTokens('accessToken', 'refreshToken');
   });
 
   afterEach(() => {
-    cy.visit('http://localhost:4000/');
+    cy.visit('/');
     setTokens('', '');
   });
 
@@ -79,12 +79,12 @@ describe('Процесс создания заказа', () => {
     cy.intercept('POST', 'api/orders', { fixture: 'post_order-response' });
     cy.intercept('GET', 'api/orders/all', { fixture: 'orders' });
 
-    cy.visit('http://localhost:4000');
+    cy.visit('/');
     setTokens('accessToken', 'refreshToken');
   });
 
   afterEach(() => {
-    cy.visit('http://localhost:4000/');
+    cy.visit('/');
     setTokens('', '');
   });
 
